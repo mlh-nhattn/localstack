@@ -1,0 +1,78 @@
+version: "3.1"
+services:
+    redis:
+      image: redis:6
+      container_name: taiyokenki-redis
+      environment:
+        - TZ=Asia/Tokyo
+      ports:
+        - "6391:6379"
+
+    postgresql:
+      image: postgres:12.2-alpine
+      container_name: taiyokenki-postgresql
+      working_dir: /application
+      volumes:
+        - .:/application
+
+      environment:
+        - POSTGRES_DB=taiyokenki
+        - POSTGRES_USER=taiyokenki
+        - POSTGRES_PASSWORD=20187a63f0901ea878fc
+        - TZ=Asia/Tokyo
+        - PGTZ=Asia/Tokyo
+      ports:
+        - "3311:5432"
+        
+    php:
+      build:
+        context: ./
+        dockerfile: php.Dockerfile
+      container_name: taiyokenki-php
+      user: ${UID}:${GID}
+      links:
+        - postgresql:postgresql
+        - redis:redis
+      ports:
+        - "9011:9000"
+      volumes:
+        - .:/application
+        - ./:/var/www/html
+        - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+
+    webserver:
+      build:
+        context: ./
+        dockerfile: nginx.Dockerfile
+      container_name: taiyokenki-webserver
+      working_dir: /application
+      links:
+        - php:fpm
+      environment:
+        - FPM_HOST=fpm
+        - FPM_PORT=9000
+      volumes:
+        - .:/application
+        - ./:/var/www/html
+        - ./storage/logs/nginx/:/var/log/nginx
+        - ./docker/nginx_conf:/etc/nginx/conf.d/
+      ports:
+       - "8012:80"
+    localstack:
+      container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
+      image: localstack/localstack
+      ports:
+        - "4566-4599:4566-4599"
+        - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
+      environment:
+        - SERVICES=sqs
+        - DEBUG=${DEBUG- }
+        - DATA_DIR=${DATA_DIR- }
+        - PORT_WEB_UI=${PORT_WEB_UI- }
+        - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+        - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+        - DOCKER_HOST=unix:///var/run/docker.sock
+        - HOST_TMP_FOLDER=${TMPDIR}
+      volumes:
+        - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+        - "/var/run/docker.sock:/var/run/docker.sock"
