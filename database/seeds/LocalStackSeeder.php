@@ -3,15 +3,15 @@
 use Illuminate\Database\Seeder;
 use App\Models\LocalStack;
 
-class DatabaseSeeder extends Seeder
+class LocalStackSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        factory(LocalStack::class, 50)->create();
+        //
     }
 }
