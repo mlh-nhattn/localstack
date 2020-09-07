@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\LocalStack;
 
-class LocalStackSeeder extends Seeder
+class FireStoreSeeder extends Seeder
 {
     /**
      * Run the database seeds.

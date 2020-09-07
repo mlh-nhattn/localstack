@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLocalStacksTable extends Migration
+class CreateFireStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateLocalStacksTable extends Migration
      */
     public function up()
     {
-        Schema::create('local_stacks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('status_code');
-            $table->text('error_message');
+        Schema::create('fire_stores', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateLocalStacksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('local_stacks');
+        Schema::dropIfExists('fire_stores');
     }
 }

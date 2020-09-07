@@ -12,6 +12,7 @@
         "aws/aws-sdk-php": "^3.151",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "google/cloud-firestore": "^1.14",
         "google/protobuf": "^v3.3.0",
         "grpc/grpc": "^v1.27.0",
         "guzzlehttp/guzzle": "^6.3",

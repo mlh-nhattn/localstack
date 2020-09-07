@@ -20,8 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('localstack', 'LocalStackController');
-
 Route::get('send_sqs', function(){
 
     $queueName = "http://localstack_demo:4576/000000000000/nhat_6666";

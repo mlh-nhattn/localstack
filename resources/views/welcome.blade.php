@@ -81,7 +81,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel @isset($user['name'])
+                        {{ $user['name'] }}
+                    @endisset
                 </div>
 
                 <div class="links">

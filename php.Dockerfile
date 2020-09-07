@@ -7,6 +7,7 @@ ENV COMPOSER_HOME /composer
 RUN set -eux && \
   apk update && \
   apk add --update --no-cache --virtual=.build-dependencies \
+    linux-headers \
     postgresql-dev \
     autoconf \
     gcc \
@@ -23,6 +24,9 @@ RUN set -eux && \
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ENV PHPREDIS_VERSION 3.1.4
+
+RUN pecl install grpc
+RUN docker-php-ext-enable grpc
 
 RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz  \
     && mkdir /tmp/redis \

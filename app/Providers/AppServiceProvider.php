@@ -14,8 +14,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(
-            \App\Service\LocalStackServiceInterface::class,
-            \App\Service\LocalStackService::class
+            \App\Services\FireStoreServiceInterface::class,
+            \App\Services\FireStoreService::class
         );
     }
 

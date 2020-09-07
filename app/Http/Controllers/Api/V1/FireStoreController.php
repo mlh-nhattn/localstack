@@ -1,12 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use Aws\Sqs\SqsClient; 
-use Aws\Exception\AwsException;
+use App\Models\FireStore;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\FireStoreServiceInterface;
 
-class LocalStackController extends Controller
+class FireStoreController extends Controller
 {
+    protected $fireStoreService;
+
+    public function __construct(FireStoreServiceInterface $fireStoreService)
+    {
+        $this->fireStoreService = $fireStoreService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -36,16 +46,15 @@ class LocalStackController extends Controller
     public function store(Request $request)
     {
         //
-        return 123;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\LocalStack  $localStack
+     * @param  \App\FireStore  $fireStore
      * @return \Illuminate\Http\Response
      */
-    public function show(LocalStack $localStack)
+    public function show(FireStore $fireStore)
     {
         //
     }
@@ -53,10 +62,10 @@ class LocalStackController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\LocalStack  $localStack
+     * @param  \App\FireStore  $fireStore
      * @return \Illuminate\Http\Response
      */
-    public function edit(LocalStack $localStack)
+    public function edit(FireStore $fireStore)
     {
         //
     }
@@ -65,10 +74,10 @@ class LocalStackController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LocalStack  $localStack
+     * @param  \App\FireStore  $fireStore
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LocalStack $localStack)
+    public function update(Request $request, FireStore $fireStore)
     {
         //
     }
@@ -76,11 +85,25 @@ class LocalStackController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LocalStack  $localStack
+     * @param  \App\FireStore  $fireStore
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LocalStack $localStack)
+    public function destroy(FireStore $fireStore)
     {
         //
+    }
+
+    /**
+     * Send message.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendMessage()
+    {
+        //
+        $sendMessage = $this->fireStoreService->sendMessage();
+        // dd($sendMessage);
+        return view('welcome')->with('user', $sendMessage);
     }
 }
