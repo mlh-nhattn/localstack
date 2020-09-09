@@ -8,21 +8,20 @@ services:
       ports:
         - "6391:6379"
 
-    postgresql:
-      image: postgres:12.2-alpine
-      container_name: taiyokenki-postgresql
+    mysql:
+      image: mysql:5.7
+      container_name: nhat-test-mysql
       working_dir: /application
       volumes:
         - .:/application
 
       environment:
-        - POSTGRES_DB=taiyokenki
-        - POSTGRES_USER=taiyokenki
-        - POSTGRES_PASSWORD=20187a63f0901ea878fc
-        - TZ=Asia/Tokyo
-        - PGTZ=Asia/Tokyo
+        - MYSQL_ROOT_PASSWORD=2020kent2020
+        - MYSQL_DATABASE=test
+        - MYSQL_USER=nhat
+        - MYSQL_PASSWORD=nhat123456
       ports:
-        - "3311:5432"
+        - "3308:3306"
         
     php:
       build:
@@ -31,7 +30,7 @@ services:
       container_name: taiyokenki-php
       user: ${UID}:${GID}
       links:
-        - postgresql:postgresql
+        - mysql:mysql
         - redis:redis
       ports:
         - "9011:9000"

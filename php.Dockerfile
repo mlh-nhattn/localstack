@@ -8,7 +8,7 @@ RUN set -eux && \
   apk update && \
   apk add --update --no-cache --virtual=.build-dependencies \
     linux-headers \
-    postgresql-dev \
+    # postgresql-dev \
     autoconf \
     gcc \
     g++ \
@@ -18,7 +18,8 @@ RUN set -eux && \
     icu-dev \
     libpng-dev \
     libzip-dev && \
-  docker-php-ext-install pdo pdo_pgsql && \
+  # docker-php-ext-install pdo pdo_pgsql && \
+  docker-php-ext-install pdo_mysql && \
   docker-php-ext-install gd && \
   docker-php-ext-install zip && \
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer

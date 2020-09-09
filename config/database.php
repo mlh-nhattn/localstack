@@ -44,6 +44,13 @@ return [
         ],
 
         'mysql' => [
+            'write' => [
+                'host' => env('DB_HOST_MASTER', '127.0.0.1'),
+            ],
+            
+            'read' => [
+                'host' => env('DB_HOST_SLAVE', '127.0.0.1'),
+            ],
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
